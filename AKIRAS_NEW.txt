@@ -1,0 +1,314 @@
+USE master;
+GO
+IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = 'AkirasBoutiques')
+    DROP DATABASE AkirasBoutiques;
+GO
+CREATE DATABASE AkirasBoutiques;
+GO
+USE [AkirasBoutiques]
+GO
+
+CREATE TABLE [dbo].[categoria](
+	[id_categoria] [int] NOT NULL PRIMARY KEY,
+	[nombre] [text] NOT NULL,
+	[descripcion] [text] NOT NULL
+)
+GO
+CREATE TABLE [dbo].[cliente](
+	[id_cliente] [int] NOT NULL PRIMARY KEY,
+	[nombre] [text] NOT NULL,
+	[apellido] [text] NOT NULL,
+	[direccion] [text] NOT NULL,
+	[fec_nac] [date] NOT NULL,
+	[telefono] [int] NOT NULL,
+	[email] [text] NOT NULL
+)
+GO
+CREATE TABLE [dbo].[producto](
+	[id_producto] [int] NOT NULL PRIMARY KEY,
+	[nombre] [text] NOT NULL,
+	[precio] [int] NOT NULL,
+	[stock] [int] NOT NULL,
+	[id_categoria] [int] NOT NULL
+)
+GO
+CREATE TABLE [dbo].[detalle](
+	[id_detalle] [int] NOT NULL PRIMARY KEY,
+	[id_producto] [int] NOT NULL,
+	[cantidad] [int] NOT NULL,
+	[precio] [int] NOT NULL
+)
+GO
+CREATE TABLE [dbo].[factura](
+	[id_factura] [int] NOT NULL PRIMARY KEY,
+	[id_cliente] [int] NOT NULL,
+	[fecha] [date] NULL,
+	[id_detalle] [int] NOT NULL
+)
+GO
+
+INSERT [dbo].[categoria] ([id_categoria], [nombre], [descripcion]) VALUES (1, N'Blusa', N'Prenda abierta de tela fina')
+INSERT [dbo].[categoria] ([id_categoria], [nombre], [descripcion]) VALUES (2, N'Falda', N'Prenda que cuelga de la cintura')
+INSERT [dbo].[categoria] ([id_categoria], [nombre], [descripcion]) VALUES (3, N'Pantalón', N'Prenda que se ajusta a la cintura')
+INSERT [dbo].[categoria] ([id_categoria], [nombre], [descripcion]) VALUES (4, N'Pijama', N'Conjunto para dormir')
+INSERT [dbo].[categoria] ([id_categoria], [nombre], [descripcion]) VALUES (5, N'Camisa', N'Prenda que cubre el tronco')
+INSERT [dbo].[categoria] ([id_categoria], [nombre], [descripcion]) VALUES (6, N'Zapato', N'Calzado')
+INSERT [dbo].[categoria] ([id_categoria], [nombre], [descripcion]) VALUES (7, N'Chamarra', N'Prenda de abrigo')
+INSERT [dbo].[categoria] ([id_categoria], [nombre], [descripcion]) VALUES (8, N'Suéter', N'Prenda de punto')
+INSERT [dbo].[categoria] ([id_categoria], [nombre], [descripcion]) VALUES (9, N'Vestido', N'Prenda elegante')
+INSERT [dbo].[categoria] ([id_categoria], [nombre], [descripcion]) VALUES (10, N'Accesorios', N'Collares y joyas')
+GO
+
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (0, N'María Antonieta', N'García Meléndez', N'Calle las Girasol #305', CAST(N'1989-06-15' AS Date), 1828921321, N'mariantonia@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (1, N'Óscar Germán', N'Wong Tabares', N'Calle Revolución #879', CAST(N'1994-01-28' AS Date), 2035672143, N'germanwong@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (2, N'Valentina Anastasia', N'Huerta Corral', N'Calle Flamenco #3493', CAST(N'1992-07-03' AS Date), 0, N'valehue92@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (3, N'Luisa Beatriz', N'Rodríguez Estrada', N'Calle Ruiseño #1903', CAST(N'1995-02-21' AS Date), 2034598383, N'betyrodri@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (4, N'Ana Maribel', N'Cedillo Núñez', N'Calle Ecuador #278', CAST(N'1986-09-25' AS Date), 1783920982, N'anamari86@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (5, N'Sara Valeria', N'Jiménez Sánchez', N'calle Amarillo #890', CAST(N'1990-10-23' AS Date), 1025675109, N'valesarita@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (6, N'Rodrigo Enrique', N'García Monreal', N'Calle Guadiana #905', CAST(N'1993-03-29' AS Date), 2146982372, N'rodrimonreal@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (7, N'Marina Gabriela', N'Villanueva Barrios', N'Calle Luna #560', CAST(N'1993-06-04' AS Date), 1161728372, N'marigaby@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (8, N'Luis Francisco', N'Bernal Casas', N'Calle Porfirio #246', CAST(N'1996-01-22' AS Date), 2034573621, N'luispacober@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (9, N'Rebeca Elizabeth', N'Puentes Ríos', N'Calle Domingo #1929', CAST(N'1988-10-18' AS Date), 123459834, N'rebepuentes88@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (10, N'Yesenia Beatriz', N'Quintanilla Torres', N'Calle Roble #405', CAST(N'1984-01-24' AS Date), 1328902183, N'betyquintanilla@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (11, N'Rodrigo Ismael', N'Silva Ugarte', N'Calle Tamarino #1209', CAST(N'1996-05-14' AS Date), 1436784145, N'rodriisma@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (12, N'Rosa Hortencia', N'Rosas Morales', N'Calle Margarita #2892', CAST(N'1983-01-15' AS Date), 1923925489, N'rositarosas@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (13, N'Gabriela Cassandra', N'Quiñones Escobar', N'Calle Dolores #239', CAST(N'1987-11-15' AS Date), 2113840192, N'cassqui87@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (14, N'Sara Roberta', N'Moreno Moreno', N'Calle Colinas #912', CAST(N'1982-12-14' AS Date), 1244930285, N'saritarober@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (15, N'María Fernanda', N'Ávila Nuñez', N'Calle Nunó #594', CAST(N'1995-09-13' AS Date), 1207583929, N'mariafer95@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (16, N'Camilo Isaac', N'Peña Huerta', N'Calle Niños Héroes #1239', CAST(N'1987-01-20' AS Date), 1293904389, N'camisac@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (17, N'Zayra Manuela', N'Gómez López', N'Calle Rosales #390', CAST(N'1977-10-28' AS Date), 1283094033, N'zaygom77@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (18, N'Rosa Alicia', N'Reyes Nájera', N'Calle Flautín #1459', CAST(N'1984-11-20' AS Date), 125940940, N'rosealice84@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (19, N'Juan Roberto', N'Ortega Rincón', N'Calle Los Álamos #4902', CAST(N'1986-07-31' AS Date), 1489328581, N'roberortega@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (21, N'Sandra Isabella', N'Pereyra Félix', N'Calle Azalea #901', CAST(N'1990-04-09' AS Date), 1289394301, N'peyfex90@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (22, N'Rogelia Margarita', N'Cruz Santos', N'Calle Golondrinas #9023', CAST(N'1986-05-11' AS Date), 1925678302, N'margaritacruz@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (23, N'Julieta Odette', N'Rocha Ramazzoti', N'Calle Río Bravo #2013', CAST(N'1993-07-16' AS Date), 1293391028, N'julyramazzoti@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (24, N'Dante Eduardo', N'Dolores Meza', N'Calle Miguel Ángel #439', CAST(N'1993-07-15' AS Date), 2023950349, N'danteduardo93@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (25, N'Bianca Alejandra', N'Rosales Rosas', N'Calle Rueda #1924', CAST(N'1987-06-26' AS Date), 1821039583, N'rosasbianca@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (26, N'Fabiola Elena', N'Reséndiz Amador', N'Calle Melchor Ocampo #901', CAST(N'1994-08-18' AS Date), 1294024901, N'fabielle94@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (27, N'Miriam Karina', N'Lara Ruíz', N'Sta. María del Oro #423', CAST(N'1990-07-26' AS Date), 2014893018, N'mirilara@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (28, N'Valeria Jimena', N'De la O Tabares', N'Calle Crisantema #311', CAST(N'1986-08-15' AS Date), 1024792478, N'valejimena@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (29, N'Juan Humberto', N'Martínez Fuentes', N'Calle Agustín de Anda #608', CAST(N'1989-10-17' AS Date), 1924802840, N'juanmar@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (30, N'Melissa Ximena', N'Zaragoza Suárez', N'Calle Río Piaxtla #4380', CAST(N'1986-05-15' AS Date), 2018438929, N'melizara@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (31, N'Cristina Miranda', N'Morales Rueda', N'Calle Magnolia #113', CAST(N'1987-08-16' AS Date), 1034920394, N'crismiranda@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (32, N'Bruno Alejandro', N'Miranda López', N'Calle del Roble #702', CAST(N'1988-06-29' AS Date), 1893019749, N'brunomiranda@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (33, N'Helena Emilia', N'Robles Espinoza', N'Calle Plan de Agua Prieta #128', CAST(N'1987-10-28' AS Date), 1892081803, N'helenarobles@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (34, N'Teresa Renata', N'Zavala Piña', N'Calle Chiapas #205', CAST(N'1985-02-20' AS Date), 1029482019, N'terezavala@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (35, N'Wendy Carolina', N'Piña Quiñones', N'Calle Gral Fco. Arrieta #211', CAST(N'1995-07-19' AS Date), 1928001001, N'carowendy@gmail.com')
+INSERT [dbo].[cliente] ([id_cliente], [nombre], [apellido], [direccion], [fec_nac], [telefono], [email]) VALUES (36, N'Jesús Alberto', N'Hidalgo Correa', N'Calle 3 de Agosto #308', CAST(N'1985-01-18' AS Date), 1890290832, N'chuybeto@gmail.com')
+GO
+
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (1, N'Blusa de flores', 200, 70, 1)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (2, N'Blusa tipo escocesa', 150, 35, 1)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (3, N'Blusa rayada manga larga', 100, 37, 1)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (4, N'Blusa con estampado animado', 100, 26, 1)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (5, N'Falda larga', 200, 45, 2)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (6, N'Falda tipo escocesa', 250, 12, 2)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (7, N'Falda tipo escolar', 120, 68, 2)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (8, N'Falda ejecutiva', 230, 20, 2)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (9, N'Pantalón acampanado', 350, 23, 3)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (10, N'Skinny Jeans', 300, 56, 3)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (11, N'Pantalón Pants', 279, 30, 3)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (12, N'Shorts de Mezclilla', 250, 48, 3)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (13, N'Camisón', 150, 9, 4)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (14, N'Conjunto de pijama', 400, 26, 4)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (15, N'Blusa de pijama', 100, 45, 4)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (16, N'Pantalón de pijama', 150, 20, 4)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (17, N'Camisa ejecutiva', 240, 36, 5)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (18, N'Camisa de flores', 270, 40, 5)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (19, N'Camisa tipo escolar', 290, 59, 5)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (20, N'Camisa con bordado', 300, 10, 5)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (21, N'Tennis suela alta', 550, 9, 6)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (22, N'Zapato de tacón', 600, 23, 6)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (23, N'Bota alta', 650, 1, 6)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (24, N'Pantuflas', 200, 24, 6)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (25, N'Abrigo largo', 1050, 3, 7)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (26, N'Chamarra pluma de ganso', 1100, 17, 7)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (27, N'Chamarra delgada', 700, 20, 7)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (28, N'Cazadora', 750, 12, 7)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (29, N'Suéter cerrado', 300, 23, 8)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (30, N'Sudadera deportiva', 450, 45, 8)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (31, N'Suéter tejido', 450, 35, 8)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (32, N'Suéter estampado', 400, 19, 8)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (33, N'Vestido corto de día', 600, 3, 9)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (34, N'Vestido de noche largo', 1350, 23, 9)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (35, N'Vestido ejecutivo', 1050, 67, 9)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (36, N'Vestido fantasía para niña', 750, 5, 9)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (37, N'Collar', 150, 9, 10)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (38, N'Pulseras', 75, 78, 10)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (39, N'Aretes', 50, 59, 10)
+INSERT [dbo].[producto] ([id_producto], [nombre], [precio], [stock], [id_categoria]) VALUES (40, N'Accesorios para el cabello', 100, 30, 10)
+GO
+
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (1, 32, 4, 1600)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (2, 8, 3, 690)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (3, 39, 4, 200)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (4, 26, 1, 110)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (5, 30, 4, 1800)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (6, 2, 5, 750)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (7, 14, 4, 1600)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (8, 36, 2, 1500)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (9, 25, 1, 1050)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (10, 34, 1, 1350)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (11, 12, 6, 1500)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (12, 13, 1, 150)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (13, 21, 1, 150)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (14, 24, 8, 1600)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (15, 31, 2, 900)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (16, 22, 1, 600)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (17, 5, 7, 1750)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (18, 3, 4, 400)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (19, 11, 2, 558)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (20, 4, 6, 600)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (21, 7, 6, 720)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (22, 10, 4, 1200)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (23, 33, 4, 2400)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (24, 39, 10, 500)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (25, 20, 8, 2400)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (26, 27, 2, 1400)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (27, 35, 4, 4200)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (28, 29, 4, 1200)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (29, 38, 6, 450)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (30, 28, 1, 750)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (31, 18, 6, 1620)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (32, 25, 6, 6300)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (33, 30, 3, 1350)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (34, 26, 5, 5500)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (35, 40, 10, 1000)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (36, 21, 9, 4950)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (37, 12, 3, 750)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (38, 8, 6, 1380)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (39, 11, 4, 1116)
+INSERT [dbo].[detalle] ([id_detalle], [id_producto], [cantidad], [precio]) VALUES (40, 4, 8, 800)
+GO
+
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (1, 9, CAST(N'2021-12-22' AS Date), 1)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (2, 9, CAST(N'2021-10-11' AS Date), 2)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (3, 4, CAST(N'2021-12-07' AS Date), 3)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (4, 4, CAST(N'2021-08-24' AS Date), 4)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (5, 1, CAST(N'2021-09-24' AS Date), 5)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (6, 1, CAST(N'2022-01-08' AS Date), 6)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (7, 0, CAST(N'2022-01-01' AS Date), 7)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (8, 0, CAST(N'2021-12-28' AS Date), 8)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (9, 3, CAST(N'2022-01-11' AS Date), 9)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (10, 3, CAST(N'2022-01-16' AS Date), 10)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (11, 2, CAST(N'2021-07-13' AS Date), 11)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (12, 2, CAST(N'2022-01-05' AS Date), 12)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (13, 6, CAST(N'2022-01-12' AS Date), 13)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (14, 6, CAST(N'2021-12-22' AS Date), 14)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (15, 5, CAST(N'2021-11-18' AS Date), 15)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (16, 5, CAST(N'2022-01-09' AS Date), 16)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (17, 7, CAST(N'2021-10-12' AS Date), 17)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (18, 7, CAST(N'2021-12-30' AS Date), 18)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (19, 8, CAST(N'2022-01-17' AS Date), 19)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (20, 8, CAST(N'2021-12-21' AS Date), 20)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (21, 26, CAST(N'2021-10-08' AS Date), 21)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (22, 30, CAST(N'2022-01-19' AS Date), 22)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (23, 31, CAST(N'2021-07-16' AS Date), 23)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (24, 35, CAST(N'2021-09-23' AS Date), 24)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (25, 25, CAST(N'2021-06-14' AS Date), 25)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (26, 29, CAST(N'2021-08-19' AS Date), 26)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (27, 27, CAST(N'2021-11-10' AS Date), 27)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (28, 24, CAST(N'2022-01-22' AS Date), 28)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (29, 26, CAST(N'2022-01-11' AS Date), 29)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (30, 36, CAST(N'2022-01-04' AS Date), 30)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (31, 12, CAST(N'2021-12-07' AS Date), 31)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (32, 14, CAST(N'2022-01-06' AS Date), 32)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (33, 24, CAST(N'2022-01-03' AS Date), 33)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (34, 17, CAST(N'2021-11-11' AS Date), 34)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (35, 31, CAST(N'2021-11-16' AS Date), 35)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (36, 36, CAST(N'2022-01-10' AS Date), 36)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (37, 23, CAST(N'2021-11-17' AS Date), 37)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (38, 29, CAST(N'2022-01-03' AS Date), 38)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (39, 26, CAST(N'2021-12-14' AS Date), 39)
+INSERT [dbo].[factura] ([id_factura], [id_cliente], [fecha], [id_detalle]) VALUES (40, 18, CAST(N'2022-01-20' AS Date), 40)
+GO
+
+ALTER TABLE [dbo].[detalle] WITH CHECK ADD CONSTRAINT [FK_det_prod] FOREIGN KEY([id_producto]) REFERENCES [dbo].[producto] ([id_producto])
+GO
+ALTER TABLE [dbo].[factura] WITH CHECK ADD CONSTRAINT [FK_fact_cli] FOREIGN KEY([id_cliente]) REFERENCES [dbo].[cliente] ([id_cliente])
+GO
+ALTER TABLE [dbo].[factura] WITH CHECK ADD CONSTRAINT [FK_fact_det] FOREIGN KEY([id_detalle]) REFERENCES [dbo].[detalle] ([id_detalle])
+GO
+ALTER TABLE [dbo].[producto] WITH CHECK ADD CONSTRAINT [FK_prod_cat] FOREIGN KEY([id_categoria]) REFERENCES [dbo].[categoria] ([id_categoria])
+GO
+
+-- TABLAS NUEVAS DE LA ACTIVIDAD MEJORADA - YA LLENAS
+CREATE TABLE Sucursales (
+    Id_Sucursal INT PRIMARY KEY,
+    Nombre_Sucursal VARCHAR(150) NOT NULL,
+    Encargado VARCHAR(100),
+    Direccion VARCHAR(250),
+    Telefono VARCHAR(20),
+    Ciudad VARCHAR(50),
+    Estado VARCHAR(50)
+);
+GO
+CREATE TABLE Empleados (
+    Id_Empleado INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(100) NOT NULL,
+    Direccion VARCHAR(250),
+    Telefono VARCHAR(20),
+    Edad INT,
+    Id_Sucursal INT,
+    Correo_Electronico VARCHAR(100) UNIQUE NOT NULL,
+    Contrasena VARCHAR(255) NOT NULL,
+    FOREIGN KEY (Id_Sucursal) REFERENCES Sucursales(Id_Sucursal)
+);
+GO
+
+INSERT INTO Sucursales VALUES
+(1, 'Akira Boutique Las Mercedes', 'Sonia', 'Calle Roble 444', '4447831225', 'San Luis Potosi', 'San Luis Potosi'),
+(2, 'Akira Boutique Obraje', 'Fernando Calderon Ayala', 'Calle Dr. Jesus Diaz de Leon #438', '4493780921', 'Aguascalientes', 'Aguascalientes'),
+(3, 'Akira Boutique Galerias Mazatlan', 'Daniela Fernanda Diaz Ordaz', 'Av. de la Marina #6204 local 35', '6692932059', 'Mazatlan', 'Sinaloa'),
+(4, 'Akira Boutique Zapopan', 'Mario Alberto Jimenez Salcido', 'Av. Manuel J. Clouthier 525', '3337841230', 'Zapopan', 'Jalisco'),
+(5, 'Akira Boutique Melchor', 'Yesenia Guadalupe Campos Rojo', 'Av. Melchor Ocampo #2528', '6143906721', 'Chihuahua', 'Chihuahua'),
+(6, 'Akira Boutique Constitucion', 'Tamara Alejandra Bernal Ramos', 'Calle Constitucion #106', '6181962954', 'Durango', 'Durango'),
+(7, 'Akira Boutique Centro', 'Samuel Enrique Barrios Enciso', 'Av. Hidalgo #338', '4929301250', 'Zacatecas', 'Zacatecas');
+GO
+
+INSERT INTO Empleados (Nombre, Direccion, Telefono, Edad, Id_Sucursal, Correo_Electronico, Contrasena) VALUES
+('Sonia Lopez', 'Calle Roble 444', '4447830001', 32, 1, 'sonia@akiras.com', 'Akira2026*1'),
+('Ana Torres', 'San Luis 123', '4447830002', 24, 1, 'ana.torres@akiras.com', 'pass123'),
+('Luis Garcia', 'San Luis 124', '4447830003', 28, 1, 'luis.garcia@akiras.com', 'pass123'),
+('Karla Mendez', 'San Luis 125', '4447830004', 22, 1, 'karla.m@akiras.com', 'pass123'),
+('Jorge Ruiz', 'San Luis 126', '4447830005', 26, 1, 'jorge.r@akiras.com', 'pass123'),
+('Maria Paz', 'San Luis 127', '4447830006', 25, 1, 'maria.paz@akiras.com', 'pass123'),
+('Fernando Calderon', 'Jesus Diaz 438', '4493780001', 38, 2, 'fernando@akiras.com', 'Akira2026*2'),
+('Alejandra Fernandez', 'Aguascalientes 10', '4493780002', 29, 2, 'ale.fernandez@akiras.com', 'pass123'),
+('Pedro Soto', 'Aguascalientes 11', '4493780003', 30, 2, 'pedro.soto@akiras.com', 'pass123'),
+('Sofia Ramos', 'Aguascalientes 12', '4493780004', 23, 2, 'sofia.r@akiras.com', 'pass123'),
+('Diego Leon', 'Aguascalientes 13', '4493780005', 27, 2, 'diego.leon@akiras.com', 'pass123'),
+('Valeria Cruz', 'Aguascalientes 14', '4493780006', 26, 2, 'valeria.c@akiras.com', 'pass123'),
+('Daniela Diaz', 'Marina 6204', '6692930001', 35, 3, 'daniela@akiras.com', 'Akira2026*3'),
+('Roberto Jimenez', 'Mazatlan 20', '6692930002', 28, 3, 'roberto.j@akiras.com', 'pass123'),
+('Fernanda Lopez', 'Mazatlan 21', '6692930003', 24, 3, 'fernanda.l@akiras.com', 'pass123'),
+('Carlos Vega', 'Mazatlan 22', '6692930004', 31, 3, 'carlos.vega@akiras.com', 'pass123'),
+('Isabel Mora', 'Mazatlan 23', '6692930005', 22, 3, 'isabel.mora@akiras.com', 'pass123'),
+('Hugo Sanchez', 'Mazatlan 24', '6692930006', 29, 3, 'hugo.s@akiras.com', 'pass123'),
+('Mario Jimenez', 'Clouthier 525', '3337840001', 40, 4, 'mario@akiras.com', 'Akira2026*4'),
+('Gabriela Ortiz', 'Zapopan 30', '3337840002', 26, 4, 'gaby.ortiz@akiras.com', 'pass123'),
+('Oscar Nava', 'Zapopan 31', '3337840003', 28, 4, 'oscar.nava@akiras.com', 'pass123'),
+('Paola Rios', 'Zapopan 32', '3337840004', 25, 4, 'paola.rios@akiras.com', 'pass123'),
+('Miguel Angel', 'Zapopan 33', '3337840005', 30, 4, 'miguel.a@akiras.com', 'pass123'),
+('Laura Gomez', 'Zapopan 34', '3337840006', 23, 4, 'laura.gomez@akiras.com', 'pass123'),
+('Yesenia Campos', 'Melchor Ocampo 2528', '6143900001', 33, 5, 'yesenia@akiras.com', 'Akira2026*5'),
+('Arturo Vidal', 'Chihuahua 40', '6143900002', 29, 5, 'arturo.v@akiras.com', 'pass123'),
+('Monica Diaz', 'Chihuahua 41', '6143900003', 27, 5, 'monica.d@akiras.com', 'pass123'),
+('Javier Luna', 'Chihuahua 42', '6143900004', 32, 5, 'javier.luna@akiras.com', 'pass123'),
+('Camila Reyes', 'Chihuahua 43', '6143900005', 24, 5, 'camila.reyes@akiras.com', 'pass123'),
+('Ernesto Ponce', 'Chihuahua 44', '6143900006', 35, 5, 'ernesto.p@akiras.com', 'pass123'),
+('Tamara Bernal', 'Constitucion 106', '6181960001', 36, 6, 'tamara@akiras.com', 'Akira2026*6'),
+('Alonso Vera', 'Durango 50', '6181960002', 28, 6, 'alonso.vera@akiras.com', 'pass123'),
+('Andrea Salas', 'Zacatecas 60', '4929300001', 26, 7, 'andrea.salas@akiras.com', 'pass123'),
+('Ricardo Flores', 'Zacatecas 61', '4929300002', 30, 7, 'ricardo.f@akiras.com', 'pass123'),
+('Elena Quiroz', 'Zacatecas 62', '4929300003', 25, 7, 'elena.q@akiras.com', 'pass123'),
+('Samuel Barrios', 'Hidalgo 338', '4929300004', 39, 7, 'samuel@akiras.com', 'Akira2026*7'),
+('Sonia Perez', 'Hidalgo 339', '4929300005', 24, 7, 'sonia.perez@akiras.com', 'pass123'),
+('Luis Quintero', 'Hidalgo 340', '4929300006', 28, 7, 'luis.q@akiras.com', 'pass123'),
+('Maria Lopez', 'Hidalgo 341', '4929300007', 27, 7, 'maria.lopez@akiras.com', 'pass123'),
+('Jorge Nava', 'Hidalgo 342', '4929300008', 30, 7, 'jorge.nava@akiras.com', 'pass123');
+GO
+
+-- CONSULTAS PARA TU EVIDENCIA
+SELECT * FROM Sucursales;
+SELECT * FROM Empleados;
